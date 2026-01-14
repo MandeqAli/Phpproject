@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f6f8fc;
+    margin: 0;
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 50px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 span {
+    color: gray;
+    font-size: 14px;
+}
+
+
+/* Categories */
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.cat {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Card */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.category {
+    font-size: 12px;
+    color: gray;
+}
+
+.price {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+button {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Seasonal */
+.seasonal-box {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.seasonal-box div {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+}
