@@ -62,13 +62,13 @@
                     <a href="#" class="see-more">See more ↗</a>
                 </div>
                 
-                <div class="products-grid">
+                <div class="products-grid best-offer-grid">
                    @foreach($bestSellers as $product)
                     <div class="product-card">
                         <div class="card-header">
                             <div class="product-info">
-                                <span class="brand-name">Nature's Bounty</span>
-                                <span class="brand-sub">HealthCare</span>
+                                <span class="brand-name">{{ $product->name }}</span>
+                                <span class="brand-sub">{{ $product->category }}</span>
                             </div>
                             
                             <button class="wishlist-btn">♡</button>
@@ -131,13 +131,13 @@
         <section class="section best-seller-section">
             <div class="container">
                 <h2 class="section-title">Our Best Seller Products</h2>
-                <div class="products-grid">
-                    @foreach($products->skip(4)->take(8) as $product)
+                <div class="products-grid best-seller-grid">
+                    @foreach($products->skip(4)->take(12) as $product)
                      <div class="product-card">
                         <div class="card-header">
                             <div class="product-info">
-                                <span class="brand-name">Nature's Bounty</span>
-                                <span class="brand-sub">Healthcare</span>
+                                <span class="brand-name">{{ $product->name }}</span>
+                                <span class="brand-sub">{{ $product->category }}</span>
                             </div>
                             <button class="wishlist-btn">♡</button>
                         </div>
@@ -162,7 +162,7 @@
                     @endforeach
                 </div>
                  <div class="center-btn">
-                    <a href="#" class="btn-outline">See more ↗</a>
+                    <a href="{{ route('shop') }}" class="btn-outline">See more ↗</a>
                 </div>
             </div>
         </section>

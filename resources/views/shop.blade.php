@@ -29,8 +29,8 @@
                     <div class="product-card">
                         <div class="card-header">
                             <div class="product-info">
-                                <span class="brand-name">Nature's Bounty</span>
-                                <span class="brand-sub">Healthcare</span>
+                                <span class="brand-name">{{ $product->name }}</span>
+                                <span class="brand-sub">{{ $product->category }}</span>
                             </div>
                             <button class="wishlist-btn">♡</button>
                         </div>
