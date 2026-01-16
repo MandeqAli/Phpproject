@@ -14,17 +14,17 @@ class OrderController extends Controller
     {
         $cartItems = Cart::with('product')->where('user_id', Auth::id())->get();
 
-        if($cartItems->isEmpty()) {
+        if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Cart is empty');
         }
 
-        foreach($cartItems as $item) {
+        foreach ($cartItems as $item) {
             Order::create([
                 'user_id' => Auth::id(),
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
                 'total_price' => $item->product->price * $item->quantity,
-                'status' => 'pending'
+                'status' => 'pending',
             ]);
         }
 
@@ -35,7 +35,7 @@ class OrderController extends Controller
             'user_id' => Auth::id(),
             'action' => 'Checkout',
             'details' => 'User placed an order from cart.',
-            'ip_address' => request()->ip()
+            'ip_address' => request()->ip(),
         ]);
 
         return redirect()->route('orders.my')->with('success', 'Order placed successfully!');
@@ -52,21 +52,21 @@ class OrderController extends Controller
     public function returnOrder(Request $request, $id)
     {
         $order = Order::where('user_id', Auth::id())->where('id', $id)->firstOrFail();
-        
+
         $request->validate([
-            'reason' => 'required|string'
+            'reason' => 'required|string',
         ]);
 
         $order->update([
             'status' => 'returned',
-            'return_reason' => $request->reason
+            'return_reason' => $request->reason,
         ]);
 
         \App\Models\ActivityLog::create([
             'user_id' => Auth::id(),
             'action' => 'Return Order',
             'details' => "Order #{$id} returned. Reason: {$request->reason}",
-            'ip_address' => $request->ip()
+            'ip_address' => $request->ip(),
         ]);
 
         return redirect()->back()->with('success', 'Return request submitted.');
@@ -78,7 +78,7 @@ class OrderController extends Controller
         $orders = Order::with(['user', 'product'])->latest()->get();
         return view('admin.orders', compact('orders'));
     }
-    
+
     // Admin Ship Order
     public function ship(Request $request, $id)
     {
@@ -86,67 +86,71 @@ class OrderController extends Controller
         $order->update(['status' => 'shipped']);
 
         \App\Models\ActivityLog::create([
-            'user_id' => Auth::id(), 
+            'user_id' => Auth::id(),
             'action' => 'Ship Order',
             'details' => "Order #{$id} marked as shipped.",
-            'ip_address' => $request->ip()
+            'ip_address' => $request->ip(),
         ]);
 
         return redirect()->back()->with('success', 'Order marked as shipped.');
     }
-public function customers()
-{
-    $orders = Order::with(['user', 'product'])->latest()->get();
-    return view('customers', compact('orders'));
-}
 
-public function show(Request $request)
-{
-    $id = $request->query('id');
-    $order = Order::with(['user', 'product'])->findOrFail($id);
-    return view('order_details', compact('order'));
+    public function customers()
+    {
+        $orders = Order::with(['user', 'product'])->latest()->get();
+        return view('customers', compact('orders'));
+    }
 
-}
+    // (optional) order single detail by query ?id=
+    public function show(Request $request)
+    {
+        $id = $request->query('id');
+        $order = Order::with(['user', 'product'])->findOrFail($id);
 
-public function updateStatus(Request $request, $id)
-{
-    $request->validate([
-        'status' => 'required|in:confirm,pending'
-    ]);
+        // NOTE: order_details view can handle $order if you want single view
+        return view('order_details', compact('order'));
+    }
 
-    $order = Order::findOrFail($id);
-    $order->update(['status' => $request->status]);
+    // Update status (AJAX)
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            // ✅ allow all statuses you are using in UI
+            'status' => 'required|in:confirm,pending,cancel,cancelled,shipped,returned',
+        ]);
 
-    return response()->json(['success' => true]);
-}
+        $order = Order::findOrFail($id);
+        $order->update(['status' => $request->status]);
 
+        return response()->json(['success' => true]);
+    }
 
-public function destroy(Request $request, $id)
-{
-    $order = Order::findOrFail($id);
-    $order->delete();
+    // Delete order (AJAX)
+    public function destroy(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
 
-    \App\Models\ActivityLog::create([
-        'user_id' => auth()->id(),
-        'action' => 'Delete Order',
-        'details' => "Order #{$id} deleted",
-        'ip_address' => $request->ip()
-    ]);
+        \App\Models\ActivityLog::create([
+            'user_id' => (int) auth()->id(),
+            'action' => 'Delete Order',
+            'details' => "Order #{$id} deleted",
+            'ip_address' => $request->ip(),
+        ]);
 
-    return response()->json(['success' => true]);
-}
+        return response()->json(['success' => true]);
+    }
 
+    // Confirmed orders list
+    public function confirmed()
+    {
+        $orders = Order::with(['user', 'product'])
+            ->where('status', 'confirm') // ✅ must match your JS status "confirm"
+            ->latest()
+            ->get();
 
-public function confirmed()
-{
-    $orders = Order::with(['user','product'])
-        ->where('status', 'confirm')
-        ->latest()
-        ->get();
-
-    return view('order_details', compact('orders'));
-}
-
+        return view('order_details', compact('orders'));
+    }
 
     // Reset System (Clear All Data)
     public function resetSystem()
@@ -154,8 +158,7 @@ public function confirmed()
         Order::truncate();
         Cart::truncate();
         \App\Models\ActivityLog::truncate();
-        
+
         return redirect()->route('home')->with('success', 'System reset! All previous orders and logs cleared.');
     }
-    
 }
