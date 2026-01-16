@@ -10,7 +10,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    private function resetUserSession()
+    private function resetUserSession()  
     {
         Auth::logout();
         

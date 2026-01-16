@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,64 +8,67 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-emerald-50">
+<body class="min-h-screen bg-gradient-to-br-from-slate-50 via-slate-100 to-emerald-50">
+
+  <!-- SIDEBAR -->
+  <!-- Font Awesome (hal mar ku dar head-ka) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <!-- SIDEBAR -->
   <aside class="fixed left-0 top-0 h-screen w-20 bg-slate-950/95 text-white flex flex-col items-center py-6 space-y-6 border-r border-white/10">
+
     <!-- Logo -->
-    <a href="/dashboard" class="h-12 w-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/10" title="Dashboard">
-      💊
+    <a href="/dashboard"
+      class="h-12 w-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-xl shadow-lg shadow-emerald-500/10"
+      title="Dashboard">
+      <i class="fa-solid fa-pills"></i>
     </a>
 
-    <!-- Links -->
+    <!-- Navigation -->
     <nav class="flex flex-col items-center gap-3">
-      <a href="/dashboard" title="Dashboard"
-        class="group relative text-2xl p-3 rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
-        🏥
-        <span class="absolute left-24 top-1/2 -translate-y-1/2 px-3 py-1 rounded-lg bg-slate-900 text-xs opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-          Dashboard
-        </span>
+
+      <!-- Dashboard -->
+      <a href="/dashboard"
+        class="group relative p-3 rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
+        title="Dashboard">
+        <i class="fa-solid fa-gauge-high text-xl"></i>
       </a>
 
-      <a href="/customers" title="Bukaan"
-        class="group relative text-2xl p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition">
-        🧑‍⚕️
-        <span class="absolute left-24 top-1/2 -translate-y-1/2 px-3 py-1 rounded-lg bg-slate-900 text-xs opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-          Bukaan
-        </span>
+      <!-- Customers -->
+      <a href="/customers"
+        class="group relative p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition"
+        title="Customers">
+        <i class="fa-solid fa-user-group text-xl"></i>
       </a>
 
-      <a href="/order_details" title="Orders"
-        class="group relative text-2xl p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition">
-        💊
-        <span class="absolute left-24 top-1/2 -translate-y-1/2 px-3 py-1 rounded-lg bg-slate-900 text-xs opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-          Orders
-        </span>
+      <!-- Orders -->
+      <a href="/order_details"
+        class="group relative p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition"
+        title="Orders">
+        <i class="fa-solid fa-clipboard-list text-xl"></i>
       </a>
 
-      <a href="/messages" title="Messages"
-        class="group relative text-2xl p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition">
-        💬
-        <span class="absolute left-24 top-1/2 -translate-y-1/2 px-3 py-1 rounded-lg bg-slate-900 text-xs opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-          Messages
-        </span>
-      </a>
+
+
     </nav>
 
     <div class="flex-1"></div>
 
     <!-- Logout -->
-    <form method="POST" action="/logout" class="pb-2">
-      <!-- @csrf -->
-      <button type="submit" title="Logout"
-        class="group relative text-2xl p-3 rounded-2xl text-red-300 hover:bg-red-500 hover:text-white transition shadow-lg shadow-red-500/10">
-        ⎋
-        <span class="absolute left-24 top-1/2 -translate-y-1/2 px-3 py-1 rounded-lg bg-slate-900 text-xs opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-          Logout
-        </span>
-      </button>
-    </form>
+    <form method="POST" action="{{ route('logout') }}" class="pb-2">
+  @csrf
+  <button type="submit"
+    class="group relative p-3 rounded-2xl text-red-300 hover:bg-red-500 hover:text-white transition shadow-lg shadow-red-500/10"
+    title="Logout">
+    <i class="fa-solid fa-right-from-bracket text-xl"></i>
+  </button>
+</form>
+
+
   </aside>
+
 
   <!-- MAIN -->
   <main class="ml-20">
@@ -86,8 +90,7 @@
               type="text"
               placeholder="Search anything..."
               class="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-200 bg-white/80
-                     focus:outline-none focus:ring-2 focus:ring-emerald-300 text-sm shadow-sm"
-            />
+                     focus:outline-none focus:ring-2 focus:ring-emerald-300 text-sm shadow-sm" />
           </div>
         </div>
 
@@ -113,7 +116,7 @@
       <!-- Quick actions row -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Welcome Card -->
-        <div class="lg:col-span-2 rounded-3xl p-6 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-xl shadow-emerald-500/20">
+        <div class="lg:col-span-2 rounded-3xl p-6 bg-gradient-to-r-from-emerald-600 to-emerald-500 text-white shadow-xl shadow-emerald-500/20">
           <div class="flex items-start justify-between gap-6">
             <div>
               <div class="text-sm text-emerald-100">Today Overview</div>
@@ -134,9 +137,7 @@
             <a href="/customers" class="px-4 py-2 rounded-2xl bg-white/15 hover:bg-white/20 text-sm font-semibold">
               View Customers
             </a>
-            <a href="/messages" class="px-4 py-2 rounded-2xl bg-white/15 hover:bg-white/20 text-sm font-semibold">
-              Open Messages
-            </a>
+           
           </div>
         </div>
 
@@ -216,7 +217,7 @@
             <span class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">Live</span>
           </div>
 
-          <div class="mt-4 h-56 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 p-3">
+          <div class="mt-4 h-56 rounded-2xl bg-gradient-to-br-from-slate-50 to-slate-100 border border-slate-200 p-3">
             <canvas id="salesChart" class="w-full h-full"></canvas>
           </div>
         </div>
@@ -231,7 +232,7 @@
             <span class="text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">Monthly</span>
           </div>
 
-          <div class="mt-4 h-56 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 p-3">
+          <div class="mt-4 h-56 rounded-2xl bg-gradient-to-br-from-slate-50 to-slate-100 border border-slate-200 p-3">
             <canvas id="ordersChart" class="w-full h-full"></canvas>
           </div>
         </div>
@@ -300,7 +301,7 @@
     new Chart(document.getElementById("salesChart"), {
       type: "line",
       data: {
-        labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         datasets: [{
           label: "Sales",
           data: [120, 190, 170, 220, 260, 300, 280],
@@ -316,10 +317,28 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
         scales: {
-          x: { grid: { display: false }, ticks: { color: "#64748b" } },
-          y: { grid: { color: "rgba(148,163,184,0.35)" }, ticks: { color: "#64748b" } }
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: "#64748b"
+            }
+          },
+          y: {
+            grid: {
+              color: "rgba(148,163,184,0.35)"
+            },
+            ticks: {
+              color: "#64748b"
+            }
+          }
         }
       }
     });
@@ -328,7 +347,7 @@
     new Chart(document.getElementById("ordersChart"), {
       type: "bar",
       data: {
-        labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
         datasets: [{
           label: "Orders",
           data: [320, 450, 380, 500, 620, 700],
@@ -340,10 +359,28 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
         scales: {
-          x: { grid: { display: false }, ticks: { color: "#64748b" } },
-          y: { grid: { color: "rgba(148,163,184,0.35)" }, ticks: { color: "#64748b" } }
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: "#64748b"
+            }
+          },
+          y: {
+            grid: {
+              color: "rgba(148,163,184,0.35)"
+            },
+            ticks: {
+              color: "#64748b"
+            }
+          }
         }
       }
     });
@@ -366,7 +403,10 @@
         plugins: {
           legend: {
             position: "bottom",
-            labels: { boxWidth: 10, padding: 12 }
+            labels: {
+              boxWidth: 10,
+              padding: 12
+            }
           }
         }
       }
@@ -374,4 +414,5 @@
   </script>
 
 </body>
+
 </html>

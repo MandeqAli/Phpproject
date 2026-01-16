@@ -70,8 +70,5 @@ Route::get('/dashboard', function () {
 // Customers
 Route::get('/customers', [OrderController::class, 'customers'])->name('customers');
 
-// Messages
-Route::get('/messages', function () {
-    return view('messages');
-})->name('messages');
+
 
