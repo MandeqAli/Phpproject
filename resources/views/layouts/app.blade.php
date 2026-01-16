@@ -945,7 +945,6 @@ footer {
 
         </div>
 
-        <!-- BOTTOM -->
         <div class="footer-bottom">
             <p>© {{ date('Y') }} PharmaStore. All rights reserved.</p>
         </div>
