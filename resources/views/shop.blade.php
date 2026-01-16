@@ -24,40 +24,50 @@
         <section class="section">
             <div class="container">
                 <h1 class="section-title">All Healthcare Products</h1>
-                <div class="products-grid">
-                    @foreach($products as $product)
-                    <div class="product-card">
-                        <div class="card-header">
-                            <div class="product-info">
-                                <span class="brand-name">{{ $product->name }}</span>
-                                <span class="brand-sub">{{ $product->category }}</span>
+
+                {{-- FIX: show message if empty --}}
+                @if(isset($products) && $products->count() > 0)
+                    <div class="products-grid">
+                        @foreach($products as $product)
+                            <div class="product-card">
+                                <div class="card-header">
+                                    <div class="product-info">
+                                        <span class="brand-name">{{ $product->name }}</span>
+                                        <span class="brand-sub">{{ $product->category ?? '' }}</span>
+                                    </div>
+                                    <button class="wishlist-btn">♡</button>
+                                </div>
+
+                                <div class="product-image">
+                                    {{-- FIX: fallback image if null/empty --}}
+                                    <img
+                                        src="{{ !empty($product->image) ? asset($product->image) : asset('images/no-image.png') }}"
+                                        alt="{{ $product->name }}"
+                                    >
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="price-box">
+                                        <span class="price">${{ $product->price }}</span>
+                                    </div>
+                                    @guest
+                                        <a href="{{ route('login') }}" class="shop-btn">Add to Cart</a>
+                                    @else
+                                        <form action="{{ route('cart.add') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="shop-btn">Add to Cart</button>
+                                        </form>
+                                    @endguest
+                                </div>
                             </div>
-                            <button class="wishlist-btn">♡</button>
-                        </div>
-                        <div class="product-image">
-                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="card-footer">
-                            <div class="price-box">
-                                <span class="price">${{ $product->price }}</span>
-                            </div>
-                            @guest
-                                <a href="{{ route('login') }}" class="shop-btn">Add to Cart</a>
-                            @else
-                                <form action="{{ route('cart.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button type="submit" class="shop-btn">Add to Cart</button>
-                                </form>
-                            @endguest
-                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
-                </div>
+                @else
+                    <p style="padding: 10px 0;">No products available.</p>
+                @endif
             </div>
         </section>
     </main>
-
-   
 </body>
 </html>

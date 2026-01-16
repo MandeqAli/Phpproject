@@ -7,6 +7,9 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- ✅ CSRF token for POST -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <style>
     .dd-hidden { opacity: 0; transform: translateY(-6px); pointer-events: none; }
     .dd-show   { opacity: 1; transform: translateY(0); pointer-events: auto; }
@@ -17,23 +20,20 @@
 
   <!-- ✅ SIDEBAR -->
   <aside class="fixed left-0 top-0 h-screen w-20 bg-slate-950/95 text-white flex flex-col items-center py-6 space-y-6 border-r border-white/10">
-    <!-- Logo -->
     <a href="/dashboard"
       class="h-12 w-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl"
       title="Dashboard">💊</a>
 
-    <!-- Menu -->
     <nav class="flex flex-col items-center gap-3">
       <a href="/dashboard"
         class="text-2xl p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition"
         title="Dashboard">🏥</a>
 
-      <!-- ✅ Active Customers -->
       <a href="/customers"
         class="text-2xl p-3 rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
         title="Customers">🧑‍⚕️</a>
 
-      <a href="/orders"
+      <a href="/order_details"
         class="text-2xl p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition"
         title="Orders">💊</a>
 
@@ -44,9 +44,8 @@
 
     <div class="flex-1"></div>
 
-    <!-- Logout -->
     <form method="POST" action="/logout" class="pb-2">
-      <!-- @csrf -->
+      @csrf
       <button type="submit" title="Logout"
         class="text-2xl p-3 rounded-2xl text-red-300 hover:bg-red-500 hover:text-white transition">⎋</button>
     </form>
@@ -55,7 +54,6 @@
   <!-- ✅ PAGE CONTENT -->
   <div class="min-h-screen bg-white ml-20">
 
-    <!-- TABLE WRAP -->
     <div class="max-w-6xl mx-auto px-6 py-8">
       <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
 
@@ -69,161 +67,117 @@
           <div class="col-span-1"></div>
         </div>
 
-        <!-- ROW 1 -->
-        <a href="/orders/show?id=1"
-           class="row-link grid grid-cols-12 px-8 py-6 border-b border-slate-100 hover:bg-slate-50 transition"
-           data-order-url="/orders/show?id=1">
+        <!-- ✅ Dynamic Rows -->
+        @forelse($orders as $order)
+          @php
+            $userName = $order->user->name ?? 'Unknown';
+            $userEmail = $order->user->email ?? '';
+            $userPhone = $order->user->phone ?? '-';
+            $productName = $order->product->name ?? 'Unknown Product';
+            $qty = $order->quantity ?? 1;
+            $amount = $order->total_price ?? 0;
+            $status = $order->status ?? 'pending';
 
-          <div class="col-span-4 flex items-center gap-5">
-            <div class="h-14 w-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
-              AB
+            $parts = preg_split('/\s+/', trim($userName));
+            $initials = '';
+            if (count($parts) >= 2) {
+              $initials = strtoupper(substr($parts[0],0,1) . substr($parts[1],0,1));
+            } else {
+              $initials = strtoupper(substr($userName,0,2));
+            }
+
+            $statusText = ucfirst($status);
+            $statusClass = 'text-amber-500';
+            if ($status === 'shipped' || $status === 'confirm') $statusClass = 'text-emerald-500';
+            if ($status === 'cancel' || $status === 'cancelled') $statusClass = 'text-red-500';
+          @endphp
+
+          <!-- ✅ IMPORTANT FIX:
+               - Remove orders.show (show page)
+               - Row click does nothing (stays here)
+               - Confirm will redirect to /order_details after updating status -->
+          <a href="#"
+             id="order-row-{{ $order->id }}"
+             data-order-id="{{ $order->id }}"
+             class="row-link grid grid-cols-12 px-8 py-6 border-b border-slate-100 hover:bg-slate-50 transition">
+
+            <div class="col-span-4 flex items-center gap-5">
+              <div class="h-14 w-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                {{ $initials }}
+              </div>
+              <div class="leading-tight">
+                <div class="font-bold text-slate-900 text-[18px]">{{ $userName }}</div>
+                <div class="text-[15px] text-slate-500">{{ $userEmail }}</div>
+              </div>
             </div>
-            <div class="leading-tight">
-              <div class="font-bold text-slate-900 text-[18px]">Abu Bin Ishtiyak</div>
-              <div class="text-[15px] text-slate-500">info@softnio.com</div>
+
+            <div class="col-span-2 flex items-center text-slate-700 text-[16px]">
+              {{ $userPhone }}
             </div>
-          </div>
 
-          <div class="col-span-2 flex items-center text-slate-700 text-[16px]">
-            +811 847-4958
-          </div>
+            <div class="col-span-3 flex items-center text-slate-700 text-[16px]">
+              Item: {{ $productName }} • Qty: {{ $qty }}
+            </div>
 
-          <div class="col-span-3 flex items-center text-slate-700 text-[16px]">
-            Item: Omidon10mg • Qty: 10pcs
-          </div>
+            <div class="col-span-1 flex items-center justify-end pr-4 font-extrabold text-slate-900 text-[16px]">
+              {{ number_format((float)$amount, 2) }} USD
+            </div>
 
-          <div class="col-span-1 flex items-center justify-end pr-4 font-extrabold text-slate-900 text-[16px]">
-            78.55 USD
-          </div>
+            <div class="col-span-1 flex items-center">
+              <span class="status-pill font-bold {{ $statusClass }} text-[16px]" data-status="{{ $status }}">
+                {{ $statusText }}
+              </span>
+            </div>
 
-          <div class="col-span-1 flex items-center">
-            <span class="status-pill font-bold text-emerald-500 text-[16px]" data-status="confirm">Confirm</span>
-          </div>
-
-          <div class="col-span-1 flex items-center justify-end relative">
-            <button type="button"
-              onclick="toggleMenu(event, this)"
-              class="h-10 w-10 rounded-xl hover:bg-slate-100 flex items-center justify-center text-slate-500"
-              title="Actions">
-              <span class="text-2xl leading-none">⋮</span>
-            </button>
-
-            <!-- Dropdown -->
-            <div class="action-menu dd-hidden transition-all duration-150 absolute right-0 top-12 w-72 rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden z-50">
-
+            <div class="col-span-1 flex items-center justify-end relative">
               <button type="button"
-                onclick="setStatus(event, this, 'confirm')"
-                class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4">
-                <span class="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">✓</span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[16px]">Confirm</div>
-                  <div class="text-sm text-slate-500">Set status to Confirm</div>
-                </div>
+                onclick="toggleMenu(event, this)"
+                class="h-10 w-10 rounded-xl hover:bg-slate-100 flex items-center justify-center text-slate-500"
+                title="Actions">
+                <span class="text-2xl leading-none">⋮</span>
               </button>
 
-              <button type="button"
-                onclick="setStatus(event, this, 'pending')"
-                class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4 border-t border-slate-100">
-                <span class="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">⌛</span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[16px]">Pending</div>
-                  <div class="text-sm text-slate-500">Set status to Pending</div>
-                </div>
-              </button>
+              <div class="action-menu dd-hidden transition-all duration-150 absolute right-0 top-12 w-72 rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden z-50">
 
-              <button type="button"
-                onclick="setStatus(event, this, 'cancel')"
-                class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4 border-t border-slate-100">
-                <span class="h-12 w-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl">✕</span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[16px]">Cancel</div>
-                  <div class="text-sm text-slate-500">Set status to Cancel</div>
-                </div>
-              </button>
+                <button type="button"
+                  onclick="setStatus(event, this, 'confirm')"
+                  class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4">
+                  <span class="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">✓</span>
+                  <div>
+                    <div class="font-bold text-slate-900 text-[16px]">Confirm</div>
+                    <div class="text-sm text-slate-500">Move to confirmed orders</div>
+                  </div>
+                </button>
 
+                <button type="button"
+                  onclick="setStatus(event, this, 'pending')"
+                  class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4 border-t border-slate-100">
+                  <span class="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">⌛</span>
+                  <div>
+                    <div class="font-bold text-slate-900 text-[16px]">Pending</div>
+                    <div class="text-sm text-slate-500">Stay on this page</div>
+                  </div>
+                </button>
+
+                <button type="button"
+                  onclick="setStatus(event, this, 'cancel')"
+                  class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4 border-t border-slate-100">
+                  <span class="h-12 w-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl">✕</span>
+                  <div>
+                    <div class="font-bold text-slate-900 text-[16px]">Cancel</div>
+                    <div class="text-sm text-slate-500">Delete & remove order</div>
+                  </div>
+                </button>
+
+              </div>
             </div>
+          </a>
+
+        @empty
+          <div class="px-8 py-8 text-[15px] text-slate-500">
+            No customers/orders yet. Place an order from cart to see it here.
           </div>
-        </a>
-
-        <!-- ROW 2 -->
-        <a href="/orders/show?id=2"
-           class="row-link grid grid-cols-12 px-8 py-6 border-b border-slate-100 hover:bg-slate-50 transition"
-           data-order-url="/orders/show?id=2">
-
-          <div class="col-span-4 flex items-center gap-5">
-            <div class="h-14 w-14 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold">
-              AL
-            </div>
-            <div class="leading-tight">
-              <div class="font-bold text-slate-900 text-[18px]">Ashley Lawson</div>
-              <div class="text-[15px] text-slate-500">ashley@softnio.com</div>
-            </div>
-          </div>
-
-          <div class="col-span-2 flex items-center text-slate-700 text-[16px]">
-            +124 394-1787
-          </div>
-
-          <div class="col-span-3 flex items-center text-slate-700 text-[16px]">
-            Item: Zimax50mg • Qty: 12pcs
-          </div>
-
-          <div class="col-span-1 flex items-center justify-end pr-4 font-extrabold text-slate-900 text-[16px]">
-            90.20 USD
-          </div>
-
-          <div class="col-span-1 flex items-center">
-            <span class="status-pill font-bold text-amber-500 text-[16px]" data-status="pending">Pending</span>
-          </div>
-
-          <div class="col-span-1 flex items-center justify-end relative">
-            <button type="button"
-              onclick="toggleMenu(event, this)"
-              class="h-10 w-10 rounded-xl hover:bg-slate-100 flex items-center justify-center text-slate-500"
-              title="Actions">
-              <span class="text-2xl leading-none">⋮</span>
-            </button>
-
-            <div class="action-menu dd-hidden transition-all duration-150 absolute right-0 top-12 w-72 rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden z-50">
-
-              <button type="button"
-                onclick="setStatus(event, this, 'confirm')"
-                class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4">
-                <span class="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">✓</span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[16px]">Confirm</div>
-                  <div class="text-sm text-slate-500">Set status to Confirm</div>
-                </div>
-              </button>
-
-              <button type="button"
-                onclick="setStatus(event, this, 'pending')"
-                class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4 border-t border-slate-100">
-                <span class="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">⌛</span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[16px]">Pending</div>
-                  <div class="text-sm text-slate-500">Set status to Pending</div>
-                </div>
-              </button>
-
-              <button type="button"
-                onclick="setStatus(event, this, 'cancel')"
-                class="w-full px-5 py-4 text-left hover:bg-slate-50 flex items-center gap-4 border-t border-slate-100">
-                <span class="h-12 w-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl">✕</span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[16px]">Cancel</div>
-                  <div class="text-sm text-slate-500">Set status to Cancel</div>
-                </div>
-              </button>
-
-            </div>
-          </div>
-        </a>
-
-        <!-- Note -->
-        <div class="px-8 py-6 text-[15px] text-slate-500">
-          Click any row to open the order page. Confirm will open the order page automatically.
-        </div>
+        @endforelse
 
       </div>
     </div>
@@ -231,6 +185,11 @@
   </div>
 
   <script>
+    function csrfToken() {
+      const el = document.querySelector('meta[name="csrf-token"]');
+      return el ? el.getAttribute('content') : '';
+    }
+
     function closeAllMenus() {
       document.querySelectorAll(".action-menu").forEach(m => {
         m.classList.remove("dd-show");
@@ -253,37 +212,113 @@
       }
     }
 
-    function setStatus(event, el, status) {
+    // ✅ Confirm -> set status confirm then redirect to /order_details
+    // ✅ Pending -> set status pending, stay here
+    // ✅ Cancel  -> delete, remove row
+    async function setStatus(event, el, status) {
       event.preventDefault();
       event.stopPropagation();
 
       const row = el.closest(".row-link");
       const pill = row.querySelector(".status-pill");
-      const orderUrl = row.dataset.orderUrl || row.getAttribute("href");
+      const orderId = row.dataset.orderId;
 
-      pill.classList.remove("text-emerald-500","text-amber-500","text-red-500");
-
-      if (status === "confirm") {
-        pill.textContent = "Confirm";
-        pill.classList.add("text-emerald-500");
+      if (!orderId) {
         closeAllMenus();
-        window.location.href = orderUrl; // ✅ Confirm opens order page automatically
         return;
       }
 
+      // ✅ CONFIRM
+      if (status === "confirm") {
+        try {
+          const res = await fetch(`/orders/${orderId}/status`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-TOKEN": csrfToken(),
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({ status: "confirm" })
+          });
+
+          const data = await res.json();
+          if (data && data.success) {
+            closeAllMenus();
+            window.location.href = "/order_details";
+            return;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        closeAllMenus();
+        return;
+      }
+
+      // ✅ PENDING
       if (status === "pending") {
-        pill.textContent = "Pending";
-        pill.classList.add("text-amber-500");
-      } else {
-        pill.textContent = "Cancel";
-        pill.classList.add("text-red-500");
+        try {
+          const res = await fetch(`/orders/${orderId}/status`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-TOKEN": csrfToken(),
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({ status: "pending" })
+          });
+
+          const data = await res.json();
+          if (data && data.success) {
+            pill.classList.remove("text-emerald-500","text-amber-500","text-red-500");
+            pill.textContent = "Pending";
+            pill.classList.add("text-amber-500");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        closeAllMenus();
+        return;
+      }
+
+      // ✅ CANCEL
+      if (status === "cancel") {
+        if (!confirm("Are you sure you want to cancel and delete this order?")) {
+          closeAllMenus();
+          return;
+        }
+
+        try {
+          const res = await fetch(`/orders/${orderId}/delete`, {
+            method: "POST",
+            headers: {
+              "X-CSRF-TOKEN": csrfToken(),
+              "Accept": "application/json"
+            }
+          });
+
+          const data = await res.json();
+          if (data && data.success) {
+            row.remove();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        closeAllMenus();
+        return;
       }
 
       closeAllMenus();
-
-      // Later: AJAX -> Laravel save status
-      // console.log("Save status:", status, "Order:", orderUrl);
     }
+
+    // ✅ stop row click from navigating anywhere
+    document.querySelectorAll(".row-link").forEach(a => {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+      });
+    });
 
     document.addEventListener("click", closeAllMenus);
     document.addEventListener("keydown", (e) => {

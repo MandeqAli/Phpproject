@@ -61,39 +61,51 @@
                     <h2 class="section-title left">Todays Best Offer <br><span>Just For You</span></h2>
                     <a href="#" class="see-more">See more ↗</a>
                 </div>
-                
-                <div class="products-grid best-offer-grid">
-                   @foreach($bestSellers as $product)
-                    <div class="product-card">
-                        <div class="card-header">
-                            <div class="product-info">
-                                <span class="brand-name">{{ $product->name }}</span>
-                                <span class="brand-sub">{{ $product->category }}</span>
+
+                {{-- FIX: show message if empty --}}
+                @if(isset($bestSellers) && $bestSellers->count() > 0)
+                    <div class="products-grid best-offer-grid">
+                        @foreach($bestSellers as $product)
+                            <div class="product-card">
+                                <div class="card-header">
+                                    <div class="product-info">
+                                        <span class="brand-name">{{ $product->name }}</span>
+                                        <span class="brand-sub">{{ $product->category ?? '' }}</span>
+                                    </div>
+
+                                    <button class="wishlist-btn">♡</button>
+                                </div>
+
+                                <div class="product-image">
+                                    {{-- FIX: fallback image if null/empty --}}
+                                    <img
+                                        src="{{ !empty($product->image) ? asset($product->image) : asset('images/no-image.png') }}"
+                                        alt="{{ $product->name }}"
+                                    >
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="price-box">
+                                        <span class="price">${{ $product->price }}</span>
+                                        <span class="old-price">$70.00</span>
+                                    </div>
+
+                                    @guest
+                                        <a href="{{ route('login') }}" class="shop-btn">Add to Cart</a>
+                                    @else
+                                        <form action="{{ route('cart.add') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="shop-btn">Add to Cart</button>
+                                        </form>
+                                    @endguest
+                                </div>
                             </div>
-                            
-                            <button class="wishlist-btn">♡</button>
-                        </div>
-                        <div class="product-image">
-                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="card-footer">
-                            <div class="price-box">
-                                <span class="price">${{ $product->price }}</span>
-                                <span class="old-price">$70.00</span>
-                            </div>
-                            @guest
-                                <a href="{{ route('login') }}" class="shop-btn">Add to Cart</a>
-                            @else
-                                <form action="{{ route('cart.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button type="submit" class="shop-btn">Add to Cart</button>
-                                </form>
-                            @endguest
-                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
-                </div>
+                @else
+                    <p style="padding: 10px 0;">No best offer products found.</p>
+                @endif
             </div>
         </section>
 
@@ -131,39 +143,52 @@
         <section class="section best-seller-section">
             <div class="container">
                 <h2 class="section-title">Our Best Seller Products</h2>
-                <div class="products-grid best-seller-grid">
-                    @foreach($products->skip(4)->take(12) as $product)
-                     <div class="product-card">
-                        <div class="card-header">
-                            <div class="product-info">
-                                <span class="brand-name">{{ $product->name }}</span>
-                                <span class="brand-sub">{{ $product->category }}</span>
+
+                {{-- FIX: show message if empty --}}
+                @if(isset($products) && $products->count() > 0)
+                    <div class="products-grid best-seller-grid">
+                        @foreach($products->skip(4)->take(12) as $product)
+                            <div class="product-card">
+                                <div class="card-header">
+                                    <div class="product-info">
+                                        <span class="brand-name">{{ $product->name }}</span>
+                                        <span class="brand-sub">{{ $product->category ?? '' }}</span>
+                                    </div>
+                                    <button class="wishlist-btn">♡</button>
+                                </div>
+
+                                <div class="product-image">
+                                    {{-- FIX: fallback image if null/empty --}}
+                                    <img
+                                        src="{{ !empty($product->image) ? asset($product->image) : asset('images/no-image.png') }}"
+                                        alt="{{ $product->name }}"
+                                    >
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="price-box">
+                                        <span class="price">${{ $product->price }}</span>
+                                    </div>
+                                    @guest
+                                        <a href="{{ route('login') }}" class="shop-btn">Add to Cart</a>
+                                    @else
+                                        <form action="{{ route('cart.add') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="shop-btn">Add to Cart</button>
+                                        </form>
+                                    @endguest
+                                </div>
                             </div>
-                            <button class="wishlist-btn">♡</button>
-                        </div>
-                        <div class="product-image">
-                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="card-footer">
-                            <div class="price-box">
-                                <span class="price">${{ $product->price }}</span>
-                            </div>
-                            @guest
-                                <a href="{{ route('login') }}" class="shop-btn">Add to Cart</a>
-                            @else
-                                <form action="{{ route('cart.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button type="submit" class="shop-btn">Add to Cart</button>
-                                </form>
-                            @endguest
-                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
-                </div>
-                 <div class="center-btn">
-                    <a href="{{ route('shop') }}" class="btn-outline">See more ↗</a>
-                </div>
+
+                    <div class="center-btn">
+                        <a href="{{ route('shop') }}" class="btn-outline">See more ↗</a>
+                    </div>
+                @else
+                    <p style="padding: 10px 0;">No products found.</p>
+                @endif
             </div>
         </section>
 
@@ -198,27 +223,20 @@
                 </div>
                 <div class="reviews-grid">
                     <div class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The savings are incredible. Being one for perpetually conscious is a great feeling. AFC explained it in a way that made sense."</p>
-                        <div class="reviewer">- The John Family</div>
+                        <h4>Great Service</h4>
+                        <p>Fast delivery and quality products.</p>
                     </div>
                     <div class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The savings are incredible. Being one for perpetually conscious is a great feeling. AFC explained it in a way that made sense."</p>
-                        <div class="reviewer">- The John Family</div>
+                        <h4>Excellent</h4>
+                        <p>Very helpful support team.</p>
                     </div>
                     <div class="review-card">
-                         <div class="stars">★★★★★</div>
-                        <p>"The savings are incredible. Being one for perpetually conscious is a great feeling. AFC explained it in a way that made sense."</p>
-                        <div class="reviewer">- The John Family</div>
+                        <h4>Trusted</h4>
+                        <p>I always buy my medicines here.</p>
                     </div>
                 </div>
             </div>
         </section>
-
     </main>
-
-   
-
 </body>
 </html>

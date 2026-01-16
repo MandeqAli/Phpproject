@@ -45,8 +45,21 @@ Route::post('order/return/{id}', [OrderController::class, 'returnOrder'])->name(
 
 
 
-Route::get('/login', function () {
-    return view('login');
+// / update status
+Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
+
+// delete order
+Route::post('/orders/{id}/delete', [OrderController::class, 'destroy'])->name('orders.delete');
+
+// // (optional) if you want row click to open order details later
+// Route::get('/orders/show', [OrderController::class, 'show'])->name('orders.show');
+
+Route::get('/order_details', [OrderController::class, 'confirmed'])->name('order.details');
+
+
+
+Route::get('/logins', function () {
+    return view('logins');
 })->name('login');
 
 
@@ -56,16 +69,10 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 // Customers
-Route::get('/customers', function () {
-    return view('customers');
-})->name('customers');
+Route::get('/customers', [OrderController::class, 'customers'])->name('customers');
 
 // Messages
 Route::get('/messages', function () {
     return view('messages');
 })->name('messages');
 
-// Order details
-Route::get('/order_details', function () {
-    return view('order_details');
-})->name('order.details');

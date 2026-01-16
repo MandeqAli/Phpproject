@@ -94,6 +94,59 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order marked as shipped.');
     }
+public function customers()
+{
+    $orders = Order::with(['user', 'product'])->latest()->get();
+    return view('customers', compact('orders'));
+}
+
+public function show(Request $request)
+{
+    $id = $request->query('id');
+    $order = Order::with(['user', 'product'])->findOrFail($id);
+    return view('order_details', compact('order'));
+
+}
+
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:confirm,pending'
+    ]);
+
+    $order = Order::findOrFail($id);
+    $order->update(['status' => $request->status]);
+
+    return response()->json(['success' => true]);
+}
+
+
+public function destroy(Request $request, $id)
+{
+    $order = Order::findOrFail($id);
+    $order->delete();
+
+    \App\Models\ActivityLog::create([
+        'user_id' => auth()->id(),
+        'action' => 'Delete Order',
+        'details' => "Order #{$id} deleted",
+        'ip_address' => $request->ip()
+    ]);
+
+    return response()->json(['success' => true]);
+}
+
+
+public function confirmed()
+{
+    $orders = Order::with(['user','product'])
+        ->where('status', 'confirm')
+        ->latest()
+        ->get();
+
+    return view('order_details', compact('orders'));
+}
+
 
     // Reset System (Clear All Data)
     public function resetSystem()
@@ -104,4 +157,5 @@ class OrderController extends Controller
         
         return redirect()->route('home')->with('success', 'System reset! All previous orders and logs cleared.');
     }
+    
 }
