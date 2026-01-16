@@ -12,10 +12,9 @@ use App\Http\Controllers\OrderController;
 |--------------------------------------------------------------------------
 */
 
-// Home
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+use App\Http\Controllers\HomeController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Products
 Route::get('/product', [ProductController::class, 'index'])->name('product');
