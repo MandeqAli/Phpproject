@@ -3,35 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login - Pharmacy System</title>
+  <title>Admin Login - Pharmacy System</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-brfrom-green-50 to-green-100">
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
 
   <div class="bg-white shadow-xl rounded-xl flex w-full max-w-4xl overflow-hidden">
 
     <!-- Left Side -->
     <div class="hidden md:flex w-1/2 bg-green-600 text-white flex-col items-center justify-center p-10">
       <div class="text-6xl mb-4">💊</div>
-      <h2 class="text-3xl font-bold">Pharmacy System</h2>
+      <h2 class="text-3xl font-bold">Pharmacy Admin</h2>
       <p class="mt-2 text-green-100 text-center">
-        Manage medicines, sales and inventory easily.
+        Manage orders, customers and inventory.
       </p>
     </div>
 
     <!-- Right Side -->
     <div class="w-full md:w-1/2 p-8">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">Login to Your Account</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Admin Login</h2>
 
-      <!-- Example error (Laravel validation) -->
-      <!--
-      <p class="bg-red-100 text-red-600 p-2 rounded mb-4">
-        Invalid Email or Password
-      </p>
-      -->
+      @if($errors->any())
+        <p class="bg-red-100 text-red-600 p-2 rounded mb-4">
+          {{ $errors->first() }}
+        </p>
+      @endif
 
-      <form method="POST" action="/login" class="space-y-4">
-        <!-- @csrf -->
+      <!-- ✅ ONE FORM ONLY -->
+      <form method="POST" action="{{ route('login.admin.submit') }}" class="space-y-4">
+        @csrf
 
         <!-- Email -->
         <div class="relative">
@@ -39,9 +40,10 @@
           <input
             name="email"
             type="email"
-            placeholder="Email Address"
+            placeholder="Admin Email"
             class="w-full pl-10 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-            value=""
+            value="{{ old('email') }}"
+            required
           />
         </div>
 
@@ -55,6 +57,7 @@
             type="password"
             placeholder="Password"
             class="w-full pl-10 pr-10 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
           />
 
           <button
@@ -74,10 +77,6 @@
           Login
         </button>
       </form>
-
-      <p class="text-sm text-gray-500 mt-4">
-        Forgot password? <a href="#" class="text-green-600">Reset</a>
-      </p>
     </div>
   </div>
 

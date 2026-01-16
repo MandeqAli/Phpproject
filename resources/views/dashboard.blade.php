@@ -57,14 +57,15 @@
     <div class="flex-1"></div>
 
     <!-- Logout -->
-    <form method="POST" action="{{ route('logout') }}" class="pb-2">
+ <form method="POST" action="{{ route('logout.admin') }}">
   @csrf
-  <button type="submit"
-    class="group relative p-3 rounded-2xl text-red-300 hover:bg-red-500 hover:text-white transition shadow-lg shadow-red-500/10"
-    title="Logout">
+  <button type="submit" title="Logout">
     <i class="fa-solid fa-right-from-bracket text-xl"></i>
   </button>
 </form>
+
+
+
 
 
   </aside>
@@ -101,7 +102,7 @@
           <button class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 hover:bg-white shadow-sm" title="Notifications">🔔</button>
 
           <div class="hidden sm:flex items-center gap-2 pl-2">
-            <img src="https://flagcdn.com/w20/us.png" alt="US" class="w-6 h-4 object-cover rounded-sm shadow-sm" />
+            <!-- <img src="https://flagcdn.com/w20/us.png" alt="US" class="w-6 h-4 object-cover rounded-sm shadow-sm" /> -->
             <div class="h-11 w-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-500/20">
               A
             </div>

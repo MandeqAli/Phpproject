@@ -1,0 +1,272 @@
+:root {
+    --primary-navy: #1D1D1D;
+    --accent-teal: #81D4FA;
+    --accent-peach: #FFEBD1;
+    --bg-lavender: #F3EFFF;
+    --white: #ffffff;
+    --gray-light: #F9F9FB;
+    --gray-soft: #E0E0E0;
+    --gray-text: #717171;
+    --radius-xl: 40px;
+    --radius-lg: 20px;
+    --shadow-premium: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: var(--bg-lavender);
+    color: var(--primary-navy);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px;
+     padding-top: 90px; /* height of navbar */
+    
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+}
+
+/* --- Branding Header --- */
+.brand-header {
+    position: absolute;
+    top: -60px;
+    left: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.logo i {
+    margin-right: 10px;
+    color: var(--primary-navy);
+}
+
+/* --- Contact Card --- */
+.mecura-contact-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    display: flex;
+    box-shadow: var(--shadow-premium);
+    overflow: hidden;
+    min-height: 450px;
+}
+
+.contact-left {
+    flex: 0.9;
+    background: #ffffff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.pharmacist-mini {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 25px;
+    border: 3px solid var(--bg-lavender);
+}
+
+.pharmacist-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contact-left h1 {
+    font-size: 2.4rem;
+    line-height: 0.95;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.brand-desc {
+    color: var(--gray-text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.contact-details {
+    margin-bottom: auto;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.detail-item i {
+    font-size: 1.1rem;
+    color: var(--primary-navy);
+    width: 38px;
+    height: 38px;
+    background: var(--bg-lavender);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-item .label {
+    font-size: 0.8rem;
+    color: var(--gray-text);
+}
+
+.detail-item .value {
+    font-weight: 500;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-navy);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background: var(--accent-teal);
+    transform: translateY(-3px);
+}
+
+/* --- Contact Right --- */
+.contact-right {
+    flex: 1.1;
+    padding: 40px;
+    background: var(--gray-light);
+}
+
+.contact-right h2 {
+    font-size: 2.0rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.form-sub {
+    color: var(--gray-text);
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+}
+
+.input-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 15px;
+    background: var(--white);
+    border: 1px solid #efefef;
+    border-radius: var(--radius-lg);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 15px rgba(129, 212, 250, 0.1);
+}
+
+.mecura-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary-navy);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.mecura-btn:hover {
+    transform: scale(0.98);
+    background: #000;
+}
+
+#formStatus {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+#formStatus.success {
+    color: #2ecc71;
+}
+
+#formStatus.error {
+    color: #e74c3c;
+}
+
+/* --- Mobile --- */
+@media (max-width: 900px) {
+    .mecura-contact-card {
+        flex-direction: column;
+    }
+
+    .contact-left,
+    .contact-right {
+        padding: 40px;
+    }
+
+    .contact-left h1 {
+        font-size: 2.5rem;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

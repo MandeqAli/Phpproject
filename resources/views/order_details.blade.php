@@ -54,14 +54,13 @@
     <div class="flex-1"></div>
 
     <!-- Logout -->
-   <form method="POST" action="{{ route('logout') }}" class="pb-2">
+   <form method="POST" action="{{ route('logout.admin') }}">
   @csrf
-  <button type="submit"
-    class="group relative p-3 rounded-2xl text-red-300 hover:bg-red-500 hover:text-white transition shadow-lg shadow-red-500/10"
-    title="Logout">
+  <button type="submit" title="Logout">
     <i class="fa-solid fa-right-from-bracket text-xl"></i>
   </button>
 </form>
+
 
   </div>
 
