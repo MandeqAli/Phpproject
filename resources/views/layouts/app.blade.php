@@ -9,12 +9,7 @@
     <link rel="stylesheet" href="{{ asset('Bootstrap/bootstrap.css') }}">
 
     <style>
-        /* =========================
-           GLOBAL
-        ========================= */
-      /* =========================
-   GLOBAL
-========================= */
+      
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #ffffff;
@@ -29,17 +24,20 @@ body {
 ========================= */
 .navbar-brand span {
     color: #0d6efd;
+    
 }
 
 .nav-link {
     color: #555;
     font-weight: 500;
+    j
 }
 
 .nav-link:hover,
 .nav-link.active {
     color: #000;
 }
+
 
 /* =========================
    HERO
@@ -265,6 +263,7 @@ footer {
 
 }
 
+
 @media (max-width: 768px) {
     .hero {
         padding: 40px 25px;
@@ -473,6 +472,159 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* =========================
+   FOOTER
+========================= */
+.site-footer {
+    background: #f9fbff;
+    padding: 70px 0 30px;
+    border-top: 1px solid #eaeaea;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* BRAND */
+.footer-logo {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.footer-logo span {
+    color: #0d6efd;
+}
+
+.footer-text {
+    font-size: 14px;
+    color: #666;
+    max-width: 320px;
+    line-height: 1.6;
+}
+
+/* TITLES */
+.footer-col h5 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* LINKS */
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #0d6efd;
+}
+
+/* CONTACT */
+.contact-list li {
+    font-size: 14px;
+    color: #555;
+}
+
+/* BOTTOM BAR */
+.footer-bottom {
+    border-top: 1px solid #eaeaea;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 13px;
+    color: #777;
+    margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-text {
+        margin: auto;
+    }
+}
+/* =========================
+   COMMITMENT SECTION
+========================= */
+.commitment-section {
+    padding: 60px 0;
+}
+
+.commitment-card {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 22px;
+    padding: 40px 30px;
+    text-align: center;
+    height: 100%;
+    transition: all 0.25s ease;
+}
+
+.commitment-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #f3f6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+}
+
+.commitment-card h6 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.commitment-card p {
+    font-size: 14px;
+    color: #777;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.commitment-card:hover {
+    transform: translateY(-6px);
+    border-color: #d6e0ff;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+.commitment-card:hover .commitment-icon {
+    background: #e8f0ff;
+    transform: scale(1.08);
+    transition: all 0.25s ease;
+}
 
 
 
@@ -588,6 +740,7 @@ footer {
                         <p>Enhances brain performance</p>
                     </div>
                 </div>
+                
             </div>
 
         </div>
@@ -596,41 +749,6 @@ footer {
 </section>
 
 
-    <div class="features-title text-center mb-4">
-        <h2 class="fw-bold">Why Shop With PharmaStore?</h2>
-        <p class="text-muted mt-2">Experience the best in online pharmacy with PharmaStore. We prioritize your health and convenience.</p>
-    </div>
-  <!-- FEATURES -->
-<div class="row g-4 my-5">
-    <div class="col-md-3">
-        <div class="feature-box">
-            <span>💊</span>
-            <h6>Quality Medicines</h6>
-            <p>Certified products</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="feature-box">
-            <span>🚚</span>
-            <h6>Fast Delivery</h6>
-            <p>On-time service</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="feature-box">
-            <span>👨‍⚕️</span>
-            <h6>Expert Support</h6>
-            <p>Licensed pharmacists</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="feature-box">
-            <span>🔒</span>
-            <h6>Secure Payment</h6>
-            <p>Trusted checkout</p>
-        </div>
-    </div>
-</div>
 
 
     <section class="section best-offer-section">
@@ -689,25 +807,152 @@ footer {
     </div>
 </section>
 
-
-    <!-- WHY CHOOSE US -->
-    <div class="my-5">
-        <h2 class="fw-bold text-center mb-5">Why Choose PharmaStore</h2>
-        <div class="row g-4">
-            <div class="col-md-3"><div class="why-card"><span>✔</span><h6>Certified</h6><p>Approved medicines</p></div></div>
-            <div class="col-md-3"><div class="why-card"><span>🚚</span><h6>Fast</h6><p>Quick delivery</p></div></div>
-            <div class="col-md-3"><div class="why-card"><span>👨‍⚕️</span><h6>Experts</h6><p>Professional advice</p></div></div>
-            <div class="col-md-3"><div class="why-card"><span>🔒</span><h6>Secure</h6><p>Safe payments</p></div></div>
+    <div class="features-title text-center mb-4">
+        <h2 class="fw-bold">Why Shop With PharmaStore?</h2>
+        <p class="text-muted mt-2">Experience the best in online pharmacy with PharmaStore. We prioritize your health and convenience.</p>
+    </div>
+  <!-- FEATURES -->
+<div class="row g-4 my-5">
+    <div class="col-md-3">
+        <div class="feature-box">
+            <span>💊</span>
+            <h6>Quality Medicines</h6>
+            <p>Certified products</p>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="feature-box">
+            <span>🚚</span>
+            <h6>Fast Delivery</h6>
+            <p>On-time service</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="feature-box">
+            <span>👨‍⚕️</span>
+            <h6>Expert Support</h6>
+            <p>Licensed pharmacists</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="feature-box">
+            <span>🔒</span>
+            <h6>Secure Payment</h6>
+            <p>Trusted checkout</p>
+        </div>
+    </div>
+</div>
+
+<!-- OUR COMMITMENT SECTION -->
+<section class="my-5 commitment-section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Our Commitment to Your Health</h2>
+            <p class="text-muted mt-2">
+                We go beyond selling medicines — we care about your well-being.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="commitment-card">
+                    <div class="commitment-icon">🧪</div>
+                    <h6>Quality Assurance</h6>
+                    <p>
+                        Every product is carefully tested, verified, and approved
+                        to meet strict safety standards.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="commitment-card">
+                    <div class="commitment-icon">💙</div>
+                    <h6>Patient-First Care</h6>
+                    <p>
+                        Your health comes first. We focus on safe solutions,
+                        clear guidance, and trusted support.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="commitment-card">
+                    <div class="commitment-icon">⏱️</div>
+                    <h6>Reliable Service</h6>
+                    <p>
+                        Fast processing, accurate orders, and dependable delivery
+                        you can rely on every time.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 </main>
 
-<footer class="py-4">
-    <div class="container text-center">
-        <small>© {{ date('Y') }} PharmaStore. All rights reserved.</small>
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <!-- BRAND -->
+            <div class="footer-col">
+                <h3 class="footer-logo">
+                    Pharma<span>Store</span>
+                </h3>
+                <p class="footer-text">
+                    Your trusted online pharmacy providing certified medicines,
+                    fast delivery, and professional healthcare support.
+                </p>
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="footer-col">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="{{ route('product') }}">Products</a></li>
+                    <li><a href="{{ route('about') }}">About Us</a></li>
+                    <li><a href="{{ route('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- SUPPORT -->
+            <div class="footer-col">
+                <h5>Support</h5>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <ul class="contact-list">
+                    <li>📍 Mogadishu, Somalia</li>
+                    <li>📞 +252 61 234 5678</li>
+                    <li>✉️ support@pharmastore.com</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="footer-bottom">
+            <p>© {{ date('Y') }} PharmaStore. All rights reserved.</p>
+        </div>
+
     </div>
 </footer>
+
 
 <script src="{{ asset('Bootstrap/bootstrap.bundle.js') }}"></script>
 
