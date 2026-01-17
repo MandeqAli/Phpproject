@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br-from-green-50 to-green-100">
 
   <div class="bg-white shadow-xl rounded-xl flex w-full max-w-4xl overflow-hidden">
 

@@ -6,16 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard - Pharmacy</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
 <body class="min-h-screen bg-gradient-to-br-from-slate-50 via-slate-100 to-emerald-50">
-
-  <!-- SIDEBAR -->
-  <!-- Font Awesome (hal mar ku dar head-ka) -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
   <!-- SIDEBAR -->
   <aside class="fixed left-0 top-0 h-screen w-20 bg-slate-950/95 text-white flex flex-col items-center py-6 space-y-6 border-r border-white/10">
 
@@ -57,12 +51,12 @@
     <div class="flex-1"></div>
 
     <!-- Logout -->
- <form method="POST" action="{{ route('logout.admin') }}">
-  @csrf
-  <button type="submit" title="Logout">
-    <i class="fa-solid fa-right-from-bracket text-xl"></i>
-  </button>
-</form>
+    <form method="POST" action="{{ route('logout.admin') }}">
+      @csrf
+      <button type="submit" title="Logout">
+        <i class="fa-solid fa-right-from-bracket text-xl"></i>
+      </button>
+    </form>
 
 
 
@@ -138,7 +132,7 @@
             <a href="/customers" class="px-4 py-2 rounded-2xl bg-white/15 hover:bg-white/20 text-sm font-semibold">
               View Customers
             </a>
-           
+
           </div>
         </div>
 
@@ -249,7 +243,7 @@
           </div>
 
           <div class="mt-4 grid grid-cols-5 gap-3 items-center">
-            <div class="col-span-2 h-40 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 p-3">
+            <div class="col-span-2 h-40 rounded-2xl bg-gradient-to-br-from-slate-50 to-slate-100 border border-slate-200 p-3">
               <canvas id="storeChart" class="w-full h-full"></canvas>
             </div>
 

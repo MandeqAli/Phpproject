@@ -10,7 +10,7 @@
             <p class="text-muted mt-3">
                 Trusted healthcare products delivered to your door.
             </p>
-            <a href="{{ route('product') }}" class="btn btn-primary mt-3 px-4">
+            <a href="{{ route(name: 'product') }}" class="btn btn-primary mt-3 px-4">
                 Shop Now
             </a>
         </div>

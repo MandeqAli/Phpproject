@@ -38,7 +38,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                 <li class="nav-item"><a class="nav-link active" href="{{ route('contact') }}">Contact</a></li>
             </ul>
-            <a class="btn btn-dark rounded-pill px-4" href="#">Get Started</a>
+            <a class="btn btn-dark rounded-pill px-4" href="{{ route('contact') }}">Get Started</a>
         </div>
     </div>
 </nav>
