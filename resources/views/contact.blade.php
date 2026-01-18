@@ -84,8 +84,8 @@
                     <div class="detail-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <p class="label">Headquarters</p>
-                            <p class="value">Degmadda Hodan ka soo horjeedka Hayat Market</p>
+                            <p class="label">Location</p>
+                            <p class="value">Hodan District</p>
                         </div>
                     </div>
                 </div>
