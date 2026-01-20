@@ -58,7 +58,7 @@
                 <div class="pharmacist-mini">
                     <img src="{{ asset('images/hero-doctor.png') }}" alt="Mecura Pharmacist">
                 </div>
-                <h1>Mecura<br>Pharmacy</h1>
+                <h1>Store<br>Pharmacy</h1>
                 <p class="brand-desc">
                     Providing operational healthiness and clinically tested medical solutions for over 20 years.
                     Your health is our priority.
