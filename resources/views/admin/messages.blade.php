@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Confirmed Orders</title>
+  <title>Messages - Pharmacy</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -44,18 +44,16 @@
     </a>
 
     <a href="/order_details"
-      class="p-3 rounded-xl bg-emerald-600 text-white"
+      class="p-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white"
       title="Confirmed Orders">
       <i class="fa-solid fa-clipboard-check text-xl"></i>
     </a>
-
+    
     <a href="{{ route('admin.messages') }}"
-      class="p-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white"
+      class="p-3 rounded-xl bg-emerald-600 text-white"
       title="Messages">
       <i class="fa-solid fa-envelope text-xl"></i>
     </a>
-
-
 
     <div class="flex-1"></div>
 
@@ -67,7 +65,6 @@
   </button>
 </form>
 
-
   </div>
 
   <!-- PAGE CONTENT -->
@@ -76,9 +73,9 @@
     <!-- Header -->
     <div class="bg-white border-b border-slate-200">
       <div class="max-w-5xl mx-auto px-6 py-5">
-        <div class="text-sm text-slate-500">Orders</div>
-        <div class="text-2xl font-extrabold text-slate-800">Confirmed Orders</div>
-        <div class="text-sm text-slate-500 mt-1">All orders that are confirmed</div>
+        <div class="text-sm text-slate-500">Admin</div>
+        <div class="text-2xl font-extrabold text-slate-800">Messages</div>
+        <div class="text-sm text-slate-500 mt-1">Contact form submissions from users</div>
       </div>
     </div>
 
@@ -87,39 +84,31 @@
 
         <!-- Table Head -->
         <div class="grid grid-cols-12 px-6 py-4 text-[14px] text-slate-500 border-b border-slate-200">
-          <div class="col-span-5">Customer</div>
-          <div class="col-span-4">Product</div>
-          <div class="col-span-1 text-right">Qty</div>
-          <div class="col-span-2 text-right">Amount</div>
+          <div class="col-span-3">Name</div>
+          <div class="col-span-3">Email</div>
+          <div class="col-span-4">Message</div>
+          <div class="col-span-2 text-right">Date</div>
         </div>
 
-        @forelse($orders as $order)
-        <div class="grid grid-cols-12 px-6 py-5 border-b border-slate-100">
-          <div class="col-span-5">
-            <div class="font-bold text-slate-900">
-              <i class="fa-solid fa-user mr-2 text-slate-400"></i>
-              {{ $order->user->name ?? 'Unknown' }}
-            </div>
-            <div class="text-sm text-slate-500">{{ $order->user->email ?? '' }}</div>
+        @forelse($messages as $msg)
+        <div class="grid grid-cols-12 px-6 py-5 border-b border-slate-100 items-start">
+          <div class="col-span-3 font-bold text-slate-900">
+            {{ $msg->name }}
           </div>
-
-          <div class="col-span-4 flex items-center text-slate-700">
-            <i class="fa-solid fa-capsules mr-2 text-slate-400"></i>
-            {{ $order->product->name ?? 'Unknown Product' }}
+          <div class="col-span-3 text-sm text-slate-500 break-words pr-2">
+            {{ $msg->email }}
           </div>
-
-          <div class="col-span-1 text-right font-semibold text-slate-800">
-            {{ $order->quantity ?? 1 }}
+          <div class="col-span-4 text-slate-700 text-sm whitespace-pre-line">
+            {{ $msg->message }}
           </div>
-
-          <div class="col-span-2 text-right font-extrabold text-slate-900">
-            {{ number_format((float)($order->total_price ?? 0), 2) }} USD
+          <div class="col-span-2 text-right text-xs text-slate-400">
+            {{ \Carbon\Carbon::parse($msg->created_at)->format('M d, Y H:i') }}
           </div>
         </div>
         @empty
         <div class="px-6 py-10 text-slate-500 text-center">
-          <i class="fa-regular fa-folder-open text-2xl mb-2"></i><br>
-          No confirmed orders yet.
+          <i class="fa-regular fa-envelope-open text-2xl mb-2"></i><br>
+          No messages received yet.
         </div>
         @endforelse
 
@@ -128,5 +117,4 @@
   </div>
 
 </body>
-
 </html>

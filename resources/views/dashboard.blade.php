@@ -44,6 +44,13 @@
         <i class="fa-solid fa-clipboard-list text-xl"></i>
       </a>
 
+      <!-- Messages -->
+      <a href="{{ route('admin.messages') }}"
+        class="group relative p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition"
+        title="Messages">
+        <i class="fa-solid fa-envelope text-xl"></i>
+      </a>
+
 
 
     </nav>
@@ -92,7 +99,7 @@
         <!-- Right -->
         <div class="flex items-center gap-3">
           <button class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 hover:bg-white shadow-sm" title="Language">🌐</button>
-          <button class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 hover:bg-white shadow-sm" title="Messages">💬</button>
+          <a href="{{ route('admin.messages') }}" class="h-11 w-11 flex items-center justify-center rounded-2xl border border-slate-200 bg-white/80 hover:bg-white shadow-sm" title="Messages">💬</a>
           <button class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 hover:bg-white shadow-sm" title="Notifications">🔔</button>
 
           <div class="hidden sm:flex items-center gap-2 pl-2">

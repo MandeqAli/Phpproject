@@ -68,6 +68,13 @@
         <i class="fa-solid fa-clipboard-list text-xl"></i>
       </a>
 
+      <!-- Messages -->
+      <a href="{{ route('admin.messages') }}"
+        class="group relative p-3 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition"
+        title="Messages">
+        <i class="fa-solid fa-envelope text-xl"></i>
+      </a>
+
     </nav>
 
     <div class="flex-1"></div>

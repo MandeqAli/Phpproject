@@ -9,12 +9,31 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminAuthController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+<<<<<<< HEAD
+=======
+
+// TEMPORARY FIX ROUTE
+Route::get('/fix-admin', function () {
+    $user = \App\Models\User::where('email', 'admin@pharmacy.com')->first();
+    if (!$user) {
+        $user = new \App\Models\User();
+        $user->name = 'Admin';
+        $user->email = 'admin@pharmacy.com';
+    }
+    $user->password = \Illuminate\Support\Facades\Hash::make('password');
+    $user->is_admin = 1; // Ensure integer 1
+    $user->save();
+    return "Admin fixed! <br>Email: admin@pharmacy.com <br>Password: password <br><a href='/login_admin'>Go to Login</a>";
+});
+
+// Products
+>>>>>>> 9872c1efcf716a21dd30e622216dae97fc06edbd
 Route::get('/product', [ProductController::class, 'index'])->name('product');
 
 Route::get('/shop', [ProductController::class, 'shop'])->name('shop');
 
 // Static pages
-Route::get('/about', fn () => view('about'))->name('about');
+Route::get('/about', fn() => view('about'))->name('about');
 use App\Http\Controllers\ContactController;
 
 // show contact page
@@ -47,7 +66,7 @@ Route::get('my-orders', [OrderController::class, 'myOrders'])->name('orders.my')
 Route::post('order/return/{id}', [OrderController::class, 'returnOrder'])->name('order.return')->middleware('auth');
 
 // If you still want /logins page, keep it with different name
-Route::get('/logins', fn () => view('logins'))->name('logins');
+Route::get('/logins', fn() => view('logins'))->name('logins');
 
 
 // ================= ADMIN LOGIN =================
@@ -65,7 +84,7 @@ Route::post('/logout_admin', [AdminAuthController::class, 'logout'])
 
 
 // ✅ ADMIN PROTECTED PAGES (ONLY ADMIN)
-Route::get('/dashboard', fn () => view('dashboard'))
+Route::get('/dashboard', fn() => view('dashboard'))
     ->name('dashboard')
     ->middleware('admin');
 
@@ -75,6 +94,10 @@ Route::get('/customers', [OrderController::class, 'customers'])
 
 Route::get('/order_details', [OrderController::class, 'confirmed'])
     ->name('order.details')
+    ->middleware('admin');
+
+Route::get('/messages', [ContactController::class, 'messages'])
+    ->name('admin.messages')
     ->middleware('admin');
 
 // (admin actions)

@@ -33,4 +33,9 @@ class ContactController extends Controller
             'message' => '✅ Message sent successfully!',
         ]);
     }
+    public function messages()
+    {
+        $messages = DB::table('contacts')->orderBy('created_at', 'desc')->get();
+        return view('admin.messages', compact('messages'));
+    }
 }
