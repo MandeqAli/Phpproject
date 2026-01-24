@@ -9,14 +9,12 @@ class AdminAuthController extends Controller
 {
     public function showLoginForm()
     {
-        // if already logged in as admin -> go dashboard
+       
         if (Auth::check() && Auth::user() && (int) Auth::user()->is_admin === 1) {
             return redirect()->route('dashboard');
         }
 
-        // ✅ MUST match your blade file name:
-        // resources/views/login_admin.blade.php  ->  view('login_admin')
-        // resources/views/logins_admin.blade.php ->  view('logins_admin')
+    
         return view('login_admin');
     }
 

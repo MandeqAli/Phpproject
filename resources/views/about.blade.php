@@ -13,7 +13,7 @@
     <!-- NAVBAR -->
     <nav class="bg-white shadow fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold text-emerald-600">PharmaCare</h1>
+            <h1 class="text-2xl font-extrabold text-emerald-600">PharmacyStore</h1>
             <ul class="hidden md:flex space-x-6 font-medium">
                 <li><a class="hover:text-emerald-600" href="{{ route('home') }}">Home</a></li>
                 <li><a class="hover:text-emerald-600" href="{{ route('product') }}">Products</a></li>

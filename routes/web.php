@@ -9,9 +9,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminAuthController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// Products
 Route::get('/product', [ProductController::class, 'index'])->name('product');
+
 Route::get('/shop', [ProductController::class, 'shop'])->name('shop');
 
 // Static pages

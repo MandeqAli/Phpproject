@@ -83,7 +83,7 @@
 
   </aside>
 
-  <!-- ✅ PAGE CONTENT -->
+  
   <div class="min-h-screen bg-white ml-20">
 
     <div class="max-w-6xl mx-auto px-6 py-8">
@@ -99,7 +99,7 @@
           <div class="col-span-1"></div>
         </div>
 
-        <!-- ✅ Dynamic Rows -->
+      
         @forelse($orders as $order)
         @php
         $userName = $order->user->name ?? 'Unknown';
@@ -124,10 +124,7 @@
         if ($status === 'cancel' || $status === 'cancelled') $statusClass = 'text-red-500';
         @endphp
 
-        <!-- ✅ IMPORTANT FIX:
-               - Remove orders.show (show page)
-               - Row click does nothing (stays here)
-               - Confirm will redirect to /order_details after updating status -->
+      
         <a href="#"
           id="order-row-{{ $order->id }}"
           data-order-id="{{ $order->id }}"
@@ -244,9 +241,7 @@
       }
     }
 
-    // ✅ Confirm -> set status confirm then redirect to /order_details
-    // ✅ Pending -> set status pending, stay here
-    // ✅ Cancel  -> delete, remove row
+   
     async function setStatus(event, el, status) {
       event.preventDefault();
       event.stopPropagation();
@@ -260,7 +255,7 @@
         return;
       }
 
-      // ✅ CONFIRM
+   
       if (status === "confirm") {
         try {
           const res = await fetch(`/orders/${orderId}/status`, {
@@ -289,7 +284,7 @@
         return;
       }
 
-      // ✅ PENDING
+   
       if (status === "pending") {
         try {
           const res = await fetch(`/orders/${orderId}/status`, {
@@ -318,7 +313,7 @@
         return;
       }
 
-      // ✅ CANCEL
+  
       if (status === "cancel") {
         if (!confirm("Are you sure you want to cancel and delete this order?")) {
           closeAllMenus();
@@ -349,7 +344,7 @@
       closeAllMenus();
     }
 
-    // ✅ stop row click from navigating anywhere
+  
     document.querySelectorAll(".row-link").forEach(a => {
       a.addEventListener("click", function(e) {
         e.preventDefault();
